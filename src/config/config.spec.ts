@@ -1,5 +1,12 @@
 // src/config/index.spec.ts
 import { config, DEFAULTS, ENV_SCHEMA } from './config';
+import { ValidationError, ValidationResult } from 'joi';
+
+interface ValidEnv {
+  name: string;
+  'logger.level': string;
+  nodeEnv: string;
+}
 
 describe('Configuration Module', () => {
   const originalEnv = process.env;
@@ -179,7 +186,15 @@ describe('Configuration Module', () => {
         HEALTH_PATH: '/health',
       };
 
-      const { error, value } = ENV_SCHEMA.validate(validEnv);
+      const result: ValidationResult<ValidEnv> = ENV_SCHEMA.validate(
+        validEnv,
+      ) as ValidationResult<ValidEnv>;
+
+      // Provide explicit types for error and value during destructuring.
+      const { error, value } = result as {
+        error: ValidationError | undefined;
+        value: ValidEnv;
+      };
       expect(error).toBeUndefined();
       expect(value).toEqual(validEnv);
     });

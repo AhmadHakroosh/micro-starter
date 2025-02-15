@@ -4,11 +4,7 @@ import { HealthModule } from '@health/health.module';
 import { LoggerModule } from '@logger';
 
 @Module({
-  imports: [
-    ConfigModule,
-    LoggerModule,
-    HealthModule,
-  ],
+  imports: [ConfigModule, LoggerModule, HealthModule],
   providers: [],
 })
 export class AppModule {}

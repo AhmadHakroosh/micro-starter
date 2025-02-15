@@ -25,7 +25,7 @@ describe('HealthModule', () => {
     expect(controller).toBeInstanceOf(HealthController);
   });
 
-  it('should import TerminusModule', async () => {
+  it('should import TerminusModule', () => {
     const importedModules = module.select(TerminusModule);
     expect(importedModules).toBeDefined();
   });

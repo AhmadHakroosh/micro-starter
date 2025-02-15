@@ -1,15 +1,10 @@
 import { config } from '@config';
 import { Controller, Get } from '@nestjs/common';
-import {
-  HealthCheck,
-  HealthCheckService,
-} from '@nestjs/terminus';
+import { HealthCheck, HealthCheckService } from '@nestjs/terminus';
 
 @Controller(config().healthPath)
 export class HealthController {
-  constructor(
-    private readonly health: HealthCheckService,
-  ) {}
+  constructor(private readonly health: HealthCheckService) {}
 
   @Get()
   @HealthCheck()

@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { Logger, PinoLogger } from 'nestjs-pino';
 
 // Mocks for external modules
 jest.mock('./app.module', () => ({
@@ -35,7 +34,7 @@ describe('bootstrap (main.ts)', () => {
     useGlobalInterceptors: jest.Mock;
     useLogger: jest.Mock;
   };
-  let loggerMock: any;
+  let loggerMock: { error: jest.Mock; log: jest.Mock };
   let killSpy: jest.SpyInstance;
 
   beforeEach(() => {
@@ -73,11 +72,13 @@ describe('bootstrap (main.ts)', () => {
   });
 
   it('should create a microservice and start listening', async () => {
+    const createSpy = jest.spyOn(NestFactory, 'create');
+
     await jest.isolateModulesAsync(async () => {
       await import('./main');
     });
 
-    expect(NestFactory.create).toHaveBeenCalled();
+    expect(createSpy).toHaveBeenCalled();
     expect(mockApp.enableShutdownHooks).toHaveBeenCalled();
     expect(mockApp.listen).toHaveBeenCalled();
   });
@@ -94,7 +95,7 @@ describe('bootstrap (main.ts)', () => {
       await import('./main');
     });
 
-    await new Promise(process.nextTick);
+    await new Promise<void>((resolve) => process.nextTick(resolve));
 
     expect(loggerMock.error).toHaveBeenCalledWith({
       message: 'Error starting application',
@@ -129,9 +130,9 @@ describe('bootstrap (main.ts)', () => {
         });
         expect(mockApp.close).toHaveBeenCalled();
         expect(killSpy).toHaveBeenCalledWith(process.pid, 'SIGTERM');
-      } catch (error) {
+      } catch (error: unknown) {
         // The process.exit call will throw an error, so we catch it here.
-        expect(error.message).toBe('process.exit: 0');
+        expect((error as Error).message).toBe('process.exit: 0');
       }
     });
 
@@ -147,9 +148,9 @@ describe('bootstrap (main.ts)', () => {
         });
         expect(mockApp.close).toHaveBeenCalled();
         expect(killSpy).toHaveBeenCalledWith(process.pid, 'SIGINT');
-      } catch (error) {
+      } catch (error: unknown) {
         // The process.exit call will throw an error, so we catch it here.
-        expect(error.message).toBe({
+        expect((error as Error).message).toBe({
           message: 'SIGINT received: closing app gracefully',
           method: 'bootstrap',
         });
@@ -168,9 +169,9 @@ describe('bootstrap (main.ts)', () => {
         });
         expect(mockApp.close).toHaveBeenCalled();
         expect(killSpy).toHaveBeenCalledWith(process.pid, 'SIGUSR2');
-      } catch (error) {
+      } catch (error: unknown) {
         // The process.exit call will throw an error, so we catch it here.
-        expect(error.message).toBe('process.exit: 0');
+        expect((error as Error).message).toBe('process.exit: 0');
       }
     });
   });

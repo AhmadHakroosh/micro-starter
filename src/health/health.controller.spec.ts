@@ -31,14 +31,17 @@ describe('HealthController', () => {
   describe('check', () => {
     it('should call health.check with an empty array and return its result', async () => {
       const expectedResponse = { status: 'ok' };
+      const checkSpy = jest.spyOn(healthCheckService, 'check');
       // Set up the mock to resolve with the expected response
-      (healthCheckService.check as jest.Mock).mockResolvedValue(expectedResponse);
+      (healthCheckService.check as jest.Mock).mockResolvedValue(
+        expectedResponse,
+      );
 
       // Call the controller method
       const result = await controller.check();
 
       // Verify the health.check method was called correctly and the expected response is returned
-      expect(healthCheckService.check).toHaveBeenCalledWith([]);
+      expect(checkSpy).toHaveBeenCalledWith([]);
       expect(result).toEqual(expectedResponse);
     });
   });

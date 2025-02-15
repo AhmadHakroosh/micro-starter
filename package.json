@@ -8,7 +8,7 @@
   "scripts": {
     "prepare": "if [ \"$NODE_ENV\" != \"production\" ]; then husky install; fi",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -42,6 +42,7 @@
     "@swc/core": "^1.10.16",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
+    "@types/newrelic": "^9.14.7",
     "@types/node": "^22.13.4",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.20.1",
