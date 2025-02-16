@@ -36,6 +36,12 @@
       "@logger/*": [
         "src/logger/*"
       ],
+      "@kafka": [
+        "src/kafka"
+      ],
+      "@kafka/*": [
+        "src/kafka/*"
+      ],
     }
   }
 }

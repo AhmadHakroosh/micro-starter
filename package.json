@@ -95,7 +95,8 @@
     "coveragePathIgnorePatterns": [
       "src/newrelic.ts",
       "src/newrelic.interceptor.ts",
-      "src/.*\\/index\\.ts$"
+      "src/.*\\/index\\.ts$",
+      "src/app.service.ts"
     ],
     "roots": [
       "<rootDir>/src/"
@@ -103,7 +104,8 @@
     "moduleNameMapper": {
       "^@config(|/.*)$": "<rootDir>/src/config$1",
       "^@logger(|/.*)$": "<rootDir>/src/logger$1",
-      "^@health(|/.*)$": "<rootDir>/src/health$1"
+      "^@health(|/.*)$": "<rootDir>/src/health$1",
+      "^@kafka(|/.*)$": "<rootDir>/src/kafka$1"
     }
   }
 }

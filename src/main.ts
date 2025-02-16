@@ -24,8 +24,6 @@ async function bootstrap(): Promise<void> {
     process.exit(1);
   });
 
-  await app.startAllMicroservices();
-
   ['SIGTERM', 'SIGINT', 'SIGUSR2'].forEach((signal) => {
     process.once(signal, () => {
       logger.log({

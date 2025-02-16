@@ -13,6 +13,7 @@
   "moduleNameMapper": {
     "^@config(|/.*)$": "<rootDir>/src/config$1",
     "^@health(|/.*)$": "<rootDir>/src/health$1",
-    "^@logger(|/.*)$": "<rootDir>/src/logger$1"
+    "^@logger(|/.*)$": "<rootDir>/src/logger$1",
+    "^@kafka(|/.*)$": "<rootDir>/src/kafka$1"
   }
 }
